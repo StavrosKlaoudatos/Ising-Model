@@ -30,18 +30,19 @@ document.addEventListener("DOMContentLoaded", function() {
         })
         .then(response => response.json())
         .then(data => {
+            const { frames, energies } = data;
             Plotly.purge('result'); // Clear any existing plots
             resultContainer.innerHTML = ''; // Clear the "Running simulation..." message
-            slider.max = data.length - 1; // Update slider range based on new data
-            totalFramesDisplay.textContent = data.length-1; // Display total frames for new simulation
-            updatePlot(data[0]); // Display the first frame of the new simulation
+            slider.max = frames.length - 1; // Update slider range based on new data
+            totalFramesDisplay.textContent = frames.length-1; // Display total frames for new simulation
+            updatePlot(frames[0]); // Display the first frame of the new simulation
             
             slider.oninput = function() {
                 const frameIndex = parseInt(this.value);
                 frameNumberDisplay.textContent = frameIndex;
-                updatePlot(data[frameIndex]);
+                updatePlot(frames[frameIndex]);
             };
-            
+            plotEnergyData(energies);
         })
         .catch(error => {
             console.error('Error:', error);
@@ -58,5 +59,24 @@ document.addEventListener("DOMContentLoaded", function() {
         }], {
             title: 'Ising Model Simulation'
         });
+    }
+
+    function plotEnergyData(energies) {
+        const steps = Array.from({ length: energies.length }, (_, i) => i + 1); // Create an array [1, 2, ..., N]
+        const energyTrace = {
+            x: steps,
+            y: energies,
+            mode: 'lines+markers',
+            name: 'Total Energy',
+            marker: { color: 'blue' }
+        };
+
+        const layout = {
+            title: 'Total Energy per Step',
+            xaxis: { title: 'Step' },
+            yaxis: { title: 'Total Energy' }
+        };
+
+        Plotly.newPlot('energy-plot', [energyTrace], layout);
     }
 });

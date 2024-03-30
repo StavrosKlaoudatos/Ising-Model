@@ -83,3 +83,17 @@ button:hover {
         padding: 10px;
     }
 }
+
+
+.plot-container {
+    margin: 20px 0;
+    width: 100%;
+    max-width: 600px; /* Match the width of your result and slider containers for consistency */
+    margin: auto;
+}
+
+#frame-slider {
+    width: 600px; /* Ensure this matches the width of your plot containers */
+    margin: 10px auto;
+    display: block;
+}
