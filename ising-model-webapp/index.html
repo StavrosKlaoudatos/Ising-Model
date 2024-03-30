@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ising Model Simulator</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Ising Model Simulator</h1>
+        <form id="simulationForm" class="form-container">
+            <div class="form-group">
+                <label for="temperature">Temperature (T):</label>
+                <input type="number" id="temperature" value="1.0" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="latticeSize">Lattice Size (N x N):</label>
+                <input type="number" id="latticeSize" value="50" step="1" required>
+            </div>
+            <div class="form-group">
+                <label for="couplingStrength">Coupling Strength (J):</label>
+                <input type="number" id="couplingStrength" value="1.0" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="magneticField">Magnetic Field (H):</label>
+                <input type="number" id="magneticField" value="0.0" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="steps">Simulation Steps:</label>
+                <input type="number" id="steps" value="100" step="1" required>
+            </div>
+            <button type="submit">Run Simulation</button>
+        </form>
+        <div id="result" class="result-container"></div>
+        <div id="slider-container">
+            Frame: <span id="frame-number">0</span> / <span id="total-frames">0</span>
+            <input type="range" id="frame-slider" min="1" max="1" value="1">
+        </div>
+    </div>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>
