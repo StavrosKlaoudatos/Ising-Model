@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
         })
         .then(response => response.json())
         .then(data => {
-            const { frames, energies } = data;
+            const { frames, energies, average_spin } = data;
             Plotly.purge('result'); // Clear any existing plots
             resultContainer.innerHTML = ''; // Clear the "Running simulation..." message
             slider.max = frames.length - 1; // Update slider range based on new data
@@ -43,6 +43,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 updatePlot(frames[frameIndex]);
             };
             plotEnergyData(energies);
+            plotAverageSpinyData(average_spin);
         })
         .catch(error => {
             console.error('Error:', error);
@@ -78,5 +79,25 @@ document.addEventListener("DOMContentLoaded", function() {
         };
 
         Plotly.newPlot('energy-plot', [energyTrace], layout);
+    }
+
+
+    function plotAverageSpinyData(average_spin) {
+        const steps = Array.from({ length: average_spin.length }, (_, i) => i + 1); // Create an array [1, 2, ..., N]
+        const aspinTrace = {
+            x: steps,
+            y: average_spin,
+            mode: 'lines+markers',
+            name: 'Average Spin',
+            marker: { color: 'red' }
+        };
+
+        const layout = {
+            title: 'Average Spin per Step',
+            xaxis: { title: 'Step' },
+            yaxis: { title: 'Average Spin' }
+        };
+
+        Plotly.newPlot('aspin-plot', [aspinTrace], layout);
     }
 });
